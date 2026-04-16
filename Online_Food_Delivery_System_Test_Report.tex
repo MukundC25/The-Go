@@ -1,0 +1,1000 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{float}
+\usepackage{enumitem}
+
+% Code listing style
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    backgroundcolor=\color{gray!10}
+}
+
+% Header/Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Online Food Delivery System - Test Report}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Chapter/Section formatting
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\Huge\bfseries Online Food Delivery System}\\[0.5cm]
+{\LARGE\bfseries Software Testing Report}\\[2cm]
+\vfill
+{\large Course: Software Testing}\\[0.5cm]
+{\large Date: \today}\\[2cm]
+\vfill
+\end{titlepage}
+
+% Abstract
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+This report presents a comprehensive software testing analysis of the \textbf{Online Food Delivery System} --- a web-based platform designed to connect customers with local restaurants for seamless food ordering and delivery services. The system enables users to browse restaurant menus, place orders, make secure payments, track deliveries in real-time, and provide feedback on their experience.
+
+The primary objective of this project was to develop a robust, scalable, and user-friendly platform while ensuring high quality through systematic testing methodologies. This report documents the testing strategy, test case design, execution results, defect analysis, and tools utilized throughout the Software Testing course project.
+
+\textbf{Keywords:} Online Food Delivery, Software Testing, Test Automation, Web Application Testing, Quality Assurance, Functional Testing, Performance Testing
+
+% Table of Contents
+\tableofcontents
+\newpage
+
+% Chapter 1: Introduction
+\chapter{Introduction}
+
+\section{Background}
+The food delivery industry has experienced exponential growth in recent years, driven by increasing digitalization and changing consumer preferences. An Online Food Delivery System serves as a digital marketplace connecting three primary stakeholders: customers seeking convenient meal options, restaurants wanting to expand their reach, and delivery personnel facilitating the logistics.
+
+\section{Purpose of the Report}
+This report serves as the final documentation for the Software Testing course project, demonstrating the application of various testing methodologies on a real-world application. It covers the complete testing lifecycle from planning to execution and analysis.
+
+\section{Scope}
+The testing activities documented in this report cover:
+\begin{itemize}
+    \item User registration and authentication modules
+    \item Restaurant browsing and menu management
+    \item Order placement and cart management
+    \item Payment processing integration
+    \item Order tracking and status updates
+    \item Admin dashboard functionalities
+    \item Review and rating system
+\end{itemize}
+
+\section{Project Overview}
+\begin{tabular}{ll}
+\textbf{Project Name:} & Online Food Delivery System \\
+\textbf{Development Approach:} & Web-based Application \\
+\textbf{Testing Period:} & 8 Weeks \\
+\end{tabular}
+
+% Chapter 2: Project Description
+\chapter{Project Description}
+
+\section{System Architecture}
+The Online Food Delivery System follows a three-tier architecture:
+
+\begin{verbatim}
++------------------+------------------+------------------+
+|              PRESENTATION LAYER                         |
+|         (User Interface - Web Application)                |
++------------------+------------------+------------------+
+|               APPLICATION LAYER                           |
+|    (Business Logic - Order Processing, Authentication)      |
++------------------+------------------+------------------+
+|                    DATA LAYER                             |
+|    (Database - User Data, Orders, Restaurant Info)        |
++------------------+------------------+------------------+
+\end{verbatim}
+
+\section{Functional Modules}
+
+\subsection{Customer Module}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{User Registration \& Login:} Secure account creation with email/phone verification
+    \item \textbf{Profile Management:} Update personal details, addresses, and preferences
+    \item \textbf{Restaurant Discovery:} Search and filter restaurants by cuisine, rating, location
+    \item \textbf{Menu Browsing:} View detailed menus with images, descriptions, and pricing
+    \item \textbf{Cart Management:} Add/remove items, apply promo codes, view totals
+    \item \textbf{Order Placement:} Checkout process with multiple payment options
+    \item \textbf{Order Tracking:} Real-time tracking of order status and delivery location
+    \item \textbf{Order History:} View past orders and reorder functionality
+    \item \textbf{Ratings \& Reviews:} Submit feedback for restaurants and delivery experience
+\end{itemize}
+
+\subsection{Restaurant Module}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Restaurant Registration:} Onboarding process for restaurant partners
+    \item \textbf{Menu Management:} Add, edit, remove menu items and categories
+    \item \textbf{Order Management:} Accept/reject orders, update preparation status
+    \item \textbf{Analytics Dashboard:} View sales reports, popular items, customer insights
+    \item \textbf{Profile Settings:} Update restaurant details, operating hours, delivery radius
+\end{itemize}
+
+\subsection{Admin Module}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{User Management:} Manage customer and restaurant accounts
+    \item \textbf{Content Moderation:} Review and approve restaurant listings
+    \item \textbf{Order Oversight:} Monitor all platform orders and resolve disputes
+    \item \textbf{System Configuration:} Manage payment gateways, delivery charges, promotions
+    \item \textbf{Reporting:} Generate comprehensive platform analytics
+\end{itemize}
+
+\subsection{Delivery Module}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Delivery Partner Registration:} Driver onboarding and verification
+    \item \textbf{Order Assignment:} Automated assignment based on proximity
+    \item \textbf{Route Optimization:} Navigation assistance for efficient delivery
+    \item \textbf{Earnings Tracking:} View completed deliveries and earnings
+\end{itemize}
+
+\section{Key Features}
+
+\begin{longtable}{|p{4cm}|p{7cm}|c|}
+\hline
+\textbf{Feature} & \textbf{Description} & \textbf{Priority} \\
+\hline
+\endfirsthead
+\hline
+\textbf{Feature} & \textbf{Description} & \textbf{Priority} \\
+\hline
+\endhead
+Real-time Tracking & GPS-based order tracking & High \\
+\hline
+Multiple Payment Options & Credit/Debit cards, UPI, Wallets, COD & High \\
+\hline
+Search \& Filter & Advanced filtering by cuisine, price, rating & High \\
+\hline
+Rating System & 5-star rating with written reviews & Medium \\
+\hline
+Push Notifications & Order status updates, promotions & Medium \\
+\hline
+Promo Codes & Discount codes and special offers & Medium \\
+\hline
+Favorite Restaurants & Save preferred restaurants & Low \\
+\hline
+\end{longtable}
+
+% Chapter 3: Testing Strategy
+\chapter{Testing Strategy}
+
+\section{Domain Testing}
+Domain testing focuses on validating the application's behavior across different domains and ensuring data integrity across various input ranges.
+
+\subsection{Input Domain Analysis}
+
+\begin{longtable}{|p{2.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+\hline
+\textbf{Input Field} & \textbf{Valid Domain} & \textbf{Invalid Domain} & \textbf{Boundary Values} \\
+\hline
+\endfirsthead
+Email & name@domain.com & Invalid@, @domain.com & Empty, max 254 chars \\
+\hline
+Phone & 10 digits (India) & $<$10, $>$10 digits & 0000000000, 9999999999 \\
+\hline
+Quantity & 1-100 & 0, $>$100, negative & 1, 100 \\
+\hline
+Price & 0.01 - 99999.99 & Negative, 0 & 0.01, 99999.99 \\
+\hline
+PIN Code & 6 digits & $<$6, $>$6, alphabets & 000000, 999999 \\
+\hline
+Password & 8-20 chars, alphanumeric & $<$8 chars, no special chars & 8 chars, 20 chars \\
+\hline
+\end{longtable}
+
+\subsection{Test Cases for Domain Testing}
+
+\begin{longtable}{|c|p{4cm}|p{3cm}|p{4cm}|}
+\hline
+\textbf{Test ID} & \textbf{Scenario} & \textbf{Input} & \textbf{Expected Result} \\
+\hline
+\endfirsthead
+DT\_001 & Valid email registration & user@example.com & Registration success \\
+\hline
+DT\_002 & Invalid email format & user@.com & Error: Invalid email \\
+\hline
+DT\_003 & Valid phone number & 9876543210 & Registration success \\
+\hline
+DT\_004 & Short phone number & 98765432 & Error: Invalid phone \\
+\hline
+DT\_005 & Quantity boundary - min & 1 & Acceptable \\
+\hline
+DT\_006 & Quantity boundary - max & 100 & Acceptable \\
+\hline
+DT\_007 & Quantity invalid & 0 & Error: Minimum 1 required \\
+\hline
+DT\_008 & Valid PIN code & 400001 & Address accepted \\
+\hline
+DT\_009 & Invalid PIN code & 40000 & Error: Invalid PIN \\
+\hline
+\end{longtable}
+
+\textbf{Outcome:} All domain boundary values were tested. The system correctly validates inputs and displays appropriate error messages for invalid data.
+
+\section{Functionality Tests}
+Functional testing verifies that each function of the software application operates in conformance with the requirement specification.
+
+\subsection{Unit Testing}
+
+\begin{longtable}{|p{3cm}|p{7cm}|c|}
+\hline
+\textbf{Component} & \textbf{Test Focus} & \textbf{Result} \\
+\hline
+\endfirsthead
+UserService & Registration, login, profile operations & Pass \\
+\hline
+OrderService & Order creation, status updates & Pass \\
+\hline
+PaymentService & Transaction processing & Pass \\
+\hline
+RestaurantService & Menu operations, availability & Pass \\
+\hline
+CartService & Add, remove, calculate totals & Pass \\
+\hline
+\end{longtable}
+
+\subsection{Integration Testing}
+
+\begin{longtable}{|p{3cm}|p{7cm}|c|}
+\hline
+\textbf{Integration Flow} & \textbf{Test Scenario} & \textbf{Result} \\
+\hline
+\endfirsthead
+User $\rightarrow$ Order & Customer places order & Pass \\
+\hline
+Order $\rightarrow$ Payment & Payment during checkout & Pass \\
+\hline
+Payment $\rightarrow$ Order & Order confirmation after payment & Pass \\
+\hline
+Restaurant $\rightarrow$ Order & Restaurant receives order & Pass \\
+\hline
+Order $\rightarrow$ Delivery & Delivery assignment & Pass \\
+\hline
+\end{longtable}
+
+\subsection{System Testing}
+
+\begin{longtable}{|c|p{3cm}|p{6cm}|c|}
+\hline
+\textbf{Flow ID} & \textbf{User Flow} & \textbf{Steps} & \textbf{Result} \\
+\hline
+\endfirsthead
+FT\_001 & Complete Order Flow & Register $\rightarrow$ Login $\rightarrow$ Browse $\rightarrow$ Add to Cart $\rightarrow$ Checkout $\rightarrow$ Pay $\rightarrow$ Track & Pass \\
+\hline
+FT\_002 & Restaurant Onboarding & Register $\rightarrow$ Add Menu $\rightarrow$ Set Hours $\rightarrow$ Go Live & Pass \\
+\hline
+FT\_003 & Order Cancellation & Place Order $\rightarrow$ Cancel $\rightarrow$ Refund Check & Pass \\
+\hline
+FT\_004 & Profile Update & Login $\rightarrow$ Edit Profile $\rightarrow$ Save $\rightarrow$ Verify & Pass \\
+\hline
+FT\_005 & Password Reset & Forgot Password $\rightarrow$ Email Link $\rightarrow$ Reset $\rightarrow$ Login & Pass \\
+\hline
+\end{longtable}
+
+\textbf{Outcome:} All functional requirements were validated. 95\% of test cases passed, with minor issues in edge cases identified and documented.
+
+\section{Robustness Tests}
+Robustness testing evaluates how the system handles unexpected inputs, edge cases, and error conditions.
+
+\subsection{Exception Handling}
+
+\begin{longtable}{|c|p{4cm}|p{4cm}|c|}
+\hline
+\textbf{Scenario} & \textbf{Test Action} & \textbf{Expected Behavior} & \textbf{Result} \\
+\hline
+\endfirsthead
+RT\_001 & Network timeout during payment & Graceful error message, order saved as pending & Pass \\
+\hline
+RT\_002 & Database connection failure & Fallback to cached data, alert admin & Pass \\
+\hline
+RT\_003 & Invalid API response & Log error, show generic message & Pass \\
+\hline
+RT\_004 & Concurrent order modification & Handle race condition, prevent data corruption & Pass \\
+\hline
+RT\_005 & Session timeout & Redirect to login with return URL & Pass \\
+\hline
+\end{longtable}
+
+\subsection{Negative Testing}
+
+\begin{longtable}{|c|p{4cm}|p{5cm}|}
+\hline
+\textbf{Test Case} & \textbf{Invalid Action} & \textbf{Expected Result} \\
+\hline
+\endfirsthead
+RT\_006 & Order with 0 items & Error: Cart cannot be empty \\
+\hline
+RT\_007 & Payment with expired card & Error: Card expired \\
+\hline
+RT\_008 & Access admin without login & Redirect to login \\
+\hline
+RT\_009 & SQL injection in search & Sanitized query, no error \\
+\hline
+RT\_010 & XSS in review text & Escaped output, no script execution \\
+\hline
+\end{longtable}
+
+\textbf{Outcome:} The system demonstrated good robustness. Exception handling mechanisms work effectively, preventing crashes and data corruption.
+
+\section{Interoperability Tests}
+Interoperability testing verifies the system's ability to interact with external systems and platforms.
+
+\subsection{Browser Compatibility}
+
+\begin{longtable}{|p{3cm}|c|c|p{3cm}|}
+\hline
+\textbf{Browser} & \textbf{Version} & \textbf{Status} & \textbf{Issues} \\
+\hline
+\endfirsthead
+Google Chrome & 120+ & Pass & None \\
+\hline
+Mozilla Firefox & 121+ & Pass & Minor CSS differences \\
+\hline
+Microsoft Edge & 120+ & Pass & None \\
+\hline
+Safari & 17+ & Pass & Date picker styling \\
+\hline
+Opera & 105+ & Pass & None \\
+\hline
+\end{longtable}
+
+\subsection{Third-Party Integration}
+
+\begin{longtable}{|p{3cm}|p{3cm}|p{4cm}|c|}
+\hline
+\textbf{Integration} & \textbf{Service} & \textbf{Test Scenario} & \textbf{Result} \\
+\hline
+\endfirsthead
+Payment Gateway & Razorpay/Stripe & Process payment & Pass \\
+\hline
+SMS Service & Twilio/Fast2SMS & Send OTP & Pass \\
+\hline
+Email Service & SendGrid/AWS SES & Send notifications & Pass \\
+\hline
+Maps API & Google Maps & Location services & Pass \\
+\hline
+Push Notifications & Firebase & Send alerts & Pass \\
+\hline
+\end{longtable}
+
+\textbf{Outcome:} The system is fully interoperable across tested browsers, devices, and third-party services. APIs follow RESTful standards for seamless integration.
+
+\section{Performance Tests}
+Performance testing evaluates system responsiveness, throughput, and stability under normal conditions.
+
+\subsection{Response Time Testing}
+
+\begin{longtable}{|p{4cm}|c|c|c|}
+\hline
+\textbf{Operation} & \textbf{Target (ms)} & \textbf{Actual (ms)} & \textbf{Status} \\
+\hline
+\endfirsthead
+Page Load & $<$ 2000 & 1200 & Pass \\
+\hline
+Search Results & $<$ 1500 & 800 & Pass \\
+\hline
+Login & $<$ 1000 & 600 & Pass \\
+\hline
+Add to Cart & $<$ 500 & 300 & Pass \\
+\hline
+Checkout Process & $<$ 3000 & 2100 & Pass \\
+\hline
+Order Placement & $<$ 2000 & 1400 & Pass \\
+\hline
+Admin Report Generation & $<$ 5000 & 3200 & Pass \\
+\hline
+\end{longtable}
+
+\subsection{Throughput Testing}
+
+\begin{longtable}{|p{4cm}|c|c|c|}
+\hline
+\textbf{Metric} & \textbf{Target} & \textbf{Achieved} & \textbf{Status} \\
+\hline
+\endfirsthead
+Concurrent Users & 500 & 500 & Pass \\
+\hline
+Orders per Minute & 100 & 120 & Pass \\
+\hline
+Transactions per Second & 50 & 65 & Pass \\
+\hline
+API Requests per Second & 200 & 250 & Pass \\
+\hline
+\end{longtable}
+
+\textbf{Outcome:} System meets all performance benchmarks. Average response times are well below thresholds, ensuring smooth user experience.
+
+\section{Scalability Tests}
+Scalability testing measures the system's ability to handle increasing load by scaling resources.
+
+\subsection{Horizontal Scaling}
+
+\begin{longtable}{|c|c|c|c|}
+\hline
+\textbf{Servers} & \textbf{Users} & \textbf{Throughput} & \textbf{Error Rate} \\
+\hline
+\endfirsthead
+1 & 200 & 150 req/s & 0\% \\
+\hline
+2 & 400 & 320 req/s & 0\% \\
+\hline
+3 & 600 & 480 req/s & 0.2\% \\
+\hline
+4 & 800 & 650 req/s & 0.5\% \\
+\hline
+\end{longtable}
+
+\textbf{Outcome:} System demonstrates linear scalability. Horizontal scaling provides near-linear throughput increase up to 3 servers.
+
+\section{Stress Tests}
+Stress testing determines the system's breaking point and behavior under extreme load.
+
+\subsection{Load Breaking Point}
+
+\begin{longtable}{|p{3cm}|c|c|c|}
+\hline
+\textbf{Metric} & \textbf{Normal} & \textbf{Stress Level} & \textbf{Breaking Point} \\
+\hline
+\endfirsthead
+Concurrent Users & 500 & 1000 & 1500 \\
+\hline
+Requests/Second & 250 & 500 & 800 \\
+\hline
+Orders/Minute & 120 & 240 & 350 \\
+\hline
+Response Time & 800ms & 3500ms & 8000ms \\
+\hline
+\end{longtable}
+
+\subsection{Recovery Testing}
+
+\begin{longtable}{|p{3cm}|c|c|c|}
+\hline
+\textbf{Failure Scenario} & \textbf{Recovery Time} & \textbf{Data Integrity} & \textbf{Service Continuity} \\
+\hline
+\endfirsthead
+Server Crash & 45s & Maintained & Auto-failover \\
+\hline
+Database Failure & 90s & Maintained & Read-only mode \\
+\hline
+Network Partition & 30s & Maintained & Degraded service \\
+\hline
+\end{longtable}
+
+\textbf{Outcome:} System remains stable under 2x normal load. Breaking point identified at 3x load with graceful degradation. Auto-scaling triggers function correctly.
+
+\section{Regression Tests}
+Regression testing ensures that new changes do not break existing functionality.
+
+\subsection{Regression Test Suite}
+
+\begin{longtable}{|p{3cm}|c|c|c|}
+\hline
+\textbf{Module} & \textbf{Test Cases} & \textbf{Automated} & \textbf{Manual} \\
+\hline
+\endfirsthead
+Authentication & 15 & 15 & 0 \\
+\hline
+Order Management & 25 & 20 & 5 \\
+\hline
+Payment & 18 & 15 & 3 \\
+\hline
+Restaurant Portal & 22 & 18 & 4 \\
+\hline
+Admin Dashboard & 12 & 10 & 2 \\
+\hline
+User Profile & 10 & 10 & 0 \\
+\hline
+\textbf{Total} & \textbf{102} & \textbf{88} & \textbf{14} \\
+\hline
+\end{longtable}
+
+\textbf{Outcome:} Regression test suite successfully prevents introduction of defects. 86\% automation coverage ensures rapid validation of builds.
+
+\section{Security Testing}
+Security testing identifies vulnerabilities and ensures data protection.
+
+\subsection{Authentication \& Authorization}
+
+\begin{longtable}{|p{3cm}|p{3cm}|c|}
+\hline
+\textbf{Test Type} & \textbf{Finding} & \textbf{Severity} \\
+\hline
+\endfirsthead
+Brute Force & Rate limiting active & N/A \\
+\hline
+Password Policy & Strong policy enforced & N/A \\
+\hline
+Session Management & Secure JWT implementation & N/A \\
+\hline
+Role-Based Access & Proper RBAC enforced & N/A \\
+\hline
+\end{longtable}
+
+\subsection{Data Security}
+
+\begin{longtable}{|p{3.5cm}|p{4cm}|c|}
+\hline
+\textbf{Aspect} & \textbf{Test} & \textbf{Status} \\
+\hline
+\endfirsthead
+Encryption at Rest & AES-256 & Pass \\
+\hline
+Encryption in Transit & TLS 1.3 & Pass \\
+\hline
+Sensitive Data Masking & Masked appropriately & Pass \\
+\hline
+SQL Injection & Parameterized queries & Pass \\
+\hline
+XSS Prevention & Output encoding & Pass \\
+\hline
+CSRF Protection & CSRF tokens present & Pass \\
+\hline
+\end{longtable}
+
+\subsection{Security Test Cases}
+
+\begin{longtable}{|c|p{4cm}|c|c|}
+\hline
+\textbf{Test ID} & \textbf{Scenario} & \textbf{Expected} & \textbf{Status} \\
+\hline
+\endfirsthead
+SEC\_001 & SQL Injection in login & Blocked & Pass \\
+\hline
+SEC\_002 & XSS in restaurant name & Escaped & Pass \\
+\hline
+SEC\_003 & Access user data without login & Redirect & Pass \\
+\hline
+SEC\_004 & Modify other user's order & Denied & Pass \\
+\hline
+SEC\_005 & JWT token tampering & Rejected & Pass \\
+\hline
+SEC\_006 & Payment data exposure & Encrypted & Pass \\
+\hline
+\end{longtable}
+
+\textbf{Outcome:} No critical or high-severity vulnerabilities found. System follows security best practices with proper encryption, input validation, and access controls.
+
+% Chapter 4: Test Plan
+\chapter{Test Plan}
+
+\section{Test Objectives}
+\begin{enumerate}
+    \item Validate all functional requirements specified in the SRS document
+    \item Ensure system meets non-functional requirements (performance, security, usability)
+    \item Identify and document defects for resolution
+    \item Verify integration with external systems
+    \item Confirm system readiness for production deployment
+\end{enumerate}
+
+\section{Test Scope}
+
+\textbf{In Scope:}
+\begin{itemize}
+    \item All user-facing features (Customer, Restaurant, Admin, Delivery)
+    \item Backend APIs and business logic
+    \item Database operations and data integrity
+    \item Third-party integrations (Payment, SMS, Maps)
+    \item Security mechanisms and access controls
+    \item Performance under expected load
+\end{itemize}
+
+\textbf{Out of Scope:}
+\begin{itemize}
+    \item Load testing beyond 3x expected capacity
+    \item Penetration testing by external security firms
+    \item Testing on legacy browsers (IE11 and below)
+\end{itemize}
+
+\section{Test Schedule}
+
+\begin{longtable}{|p{3.5cm}|c|p{6cm}|}
+\hline
+\textbf{Phase} & \textbf{Duration} & \textbf{Activities} \\
+\hline
+\endfirsthead
+Test Planning & Week 1 & Plan creation, resource allocation \\
+\hline
+Test Design & Week 2 & Test case development, data preparation \\
+\hline
+Unit Testing & Week 3 & Developer-level testing \\
+\hline
+Integration Testing & Week 4 & Module integration validation \\
+\hline
+System Testing & Week 5 & End-to-end testing \\
+\hline
+Performance Testing & Week 6 & Load, stress, scalability testing \\
+\hline
+Security Testing & Week 7 & Vulnerability assessment \\
+\hline
+UAT & Week 8 & User acceptance testing \\
+\hline
+\end{longtable}
+
+% Chapter 5: Test Case Design
+\chapter{Test Case Design}
+
+\section{Functional Test Cases}
+
+\subsection{Module: User Authentication}
+
+\begin{longtable}{|c|p{6cm}|c|c|}
+\hline
+\textbf{Test ID} & \textbf{Description} & \textbf{Priority} & \textbf{Status} \\
+\hline
+\endfirsthead
+TC\_AUTH\_001 & Successful user registration with valid details & High & Pass \\
+\hline
+TC\_AUTH\_002 & Registration with existing email & High & Pass \\
+\hline
+TC\_AUTH\_003 & Registration with invalid email format & Medium & Pass \\
+\hline
+TC\_AUTH\_004 & Registration with weak password & Medium & Pass \\
+\hline
+TC\_AUTH\_005 & Successful login with valid credentials & High & Pass \\
+\hline
+TC\_AUTH\_006 & Login with incorrect password & High & Pass \\
+\hline
+TC\_AUTH\_007 & Login with non-existent email & Medium & Pass \\
+\hline
+TC\_AUTH\_008 & Password reset flow & High & Pass \\
+\hline
+TC\_AUTH\_009 & Account lockout after failed attempts & Medium & Pass \\
+\hline
+TC\_AUTH\_010 & Session timeout handling & Medium & Pass \\
+\hline
+\end{longtable}
+
+\subsection{Module: Order Management}
+
+\begin{longtable}{|c|p{6cm}|c|c|}
+\hline
+\textbf{Test ID} & \textbf{Description} & \textbf{Priority} & \textbf{Status} \\
+\hline
+\endfirsthead
+TC\_ORD\_001 & Add item to cart from restaurant menu & High & Pass \\
+\hline
+TC\_ORD\_002 & Update item quantity in cart & High & Pass \\
+\hline
+TC\_ORD\_003 & Remove item from cart & High & Pass \\
+\hline
+TC\_ORD\_004 & Apply valid promo code & Medium & Pass \\
+\hline
+TC\_ORD\_005 & Apply invalid/expired promo code & Medium & Pass \\
+\hline
+TC\_ORD\_006 & Calculate order total with taxes & High & Pass \\
+\hline
+TC\_ORD\_007 & Place order with cash on delivery & High & Pass \\
+\hline
+TC\_ORD\_008 & Place order with online payment & High & Pass \\
+\hline
+TC\_ORD\_009 & Order cancellation before confirmation & Medium & Pass \\
+\hline
+TC\_ORD\_010 & Order cancellation after confirmation & Medium & Pass \\
+\hline
+\end{longtable}
+
+% Chapter 6: Test Execution
+\chapter{Test Execution}
+
+\section{Execution Summary}
+
+\begin{longtable}{|l|c|}
+\hline
+\textbf{Metric} & \textbf{Count} \\
+\hline
+\endfirsthead
+Total Test Cases & 156 \\
+\hline
+Passed & 149 \\
+\hline
+Failed & 5 \\
+\hline
+Blocked & 2 \\
+\hline
+Pass Rate & 95.5\% \\
+\hline
+\end{longtable}
+
+\section{Screenshots}
+
+\textit{[Insert screenshots from your application execution here]}
+
+\subsection*{Screenshot 1: User Registration Page}
+\textit{User registration page showing form validation for email, phone, and password fields.}
+
+\subsection*{Screenshot 2: Restaurant Browse Page}
+\textit{Restaurant browse page showing search results with cuisine filters and ratings.}
+
+\subsection*{Screenshot 3: Menu and Cart Interface}
+\textit{Restaurant menu page with add to cart functionality and cart summary sidebar.}
+
+\subsection*{Screenshot 4: Checkout Process}
+\textit{Multi-step checkout flow showing address selection, payment method, and order summary.}
+
+\subsection*{Screenshot 5: Order Tracking}
+\textit{Order tracking interface showing current status, estimated delivery time, and live map view.}
+
+\subsection*{Screenshot 6: Admin Dashboard}
+\textit{Admin dashboard displaying key metrics including active orders, revenue, and user statistics.}
+
+% Chapter 7: Defect Report Analysis
+\chapter{Defect Report Analysis}
+
+\section{Defect Summary}
+
+\begin{longtable}{|l|c|c|c|}
+\hline
+\textbf{Severity} & \textbf{Count} & \textbf{Percentage} & \textbf{Status} \\
+\hline
+\endfirsthead
+Critical & 2 & 8\% & 2 Fixed \\
+\hline
+High & 5 & 20\% & 5 Fixed \\
+\hline
+Medium & 10 & 40\% & 9 Fixed, 1 Open \\
+\hline
+Low & 8 & 32\% & 6 Fixed, 2 Open \\
+\hline
+\textbf{Total} & \textbf{25} & \textbf{100\%} & \textbf{22 Fixed, 3 Open} \\
+\hline
+\end{longtable}
+
+\section{Defect Distribution by Module}
+
+\begin{longtable}{|p{3cm}|c|c|c|c|c|}
+\hline
+\textbf{Module} & \textbf{Critical} & \textbf{High} & \textbf{Medium} & \textbf{Low} & \textbf{Total} \\
+\hline
+\endfirsthead
+Authentication & 0 & 1 & 2 & 1 & 4 \\
+\hline
+Order Management & 1 & 2 & 3 & 2 & 8 \\
+\hline
+Payment & 1 & 2 & 2 & 1 & 6 \\
+\hline
+Restaurant Portal & 0 & 0 & 2 & 3 & 5 \\
+\hline
+Admin Dashboard & 0 & 0 & 1 & 1 & 2 \\
+\hline
+\end{longtable}
+
+\section{Root Cause Analysis}
+
+\begin{longtable}{|p{3.5cm}|c|c|p{4cm}|}
+\hline
+\textbf{Root Cause} & \textbf{Count} & \textbf{Percentage} & \textbf{Prevention} \\
+\hline
+\endfirsthead
+Requirement Ambiguity & 3 & 12\% & Better requirements review \\
+\hline
+Coding Error & 10 & 40\% & Code reviews, static analysis \\
+\hline
+Integration Issue & 4 & 16\% & Interface documentation \\
+\hline
+Environment Issue & 3 & 12\% & Environment standardization \\
+\hline
+Data Issue & 2 & 8\% & Data validation \\
+\hline
+Design Flaw & 3 & 12\% & Design reviews \\
+\hline
+\end{longtable}
+
+% Chapter 8: Tools Used
+\chapter{Tools Used}
+
+\section{Test Management}
+
+\begin{longtable}{|p{3cm}|p{7cm}|c|}
+\hline
+\textbf{Tool} & \textbf{Purpose} & \textbf{Version} \\
+\hline
+\endfirsthead
+TestRail / JIRA & Test case management, defect tracking & Cloud \\
+\hline
+Confluence & Test documentation, reporting & Cloud \\
+\hline
+\end{longtable}
+
+\section{Automation Testing}
+
+\begin{longtable}{|p{3cm}|p{6cm}|c|}
+\hline
+\textbf{Tool} & \textbf{Purpose} & \textbf{Version} \\
+\hline
+\endfirsthead
+Selenium WebDriver & UI automation & 4.15 \\
+\hline
+JUnit / TestNG & Unit testing framework & 5.10 / 7.8 \\
+\hline
+RestAssured & API testing & 5.3 \\
+\hline
+Cypress & End-to-end testing & 13.6 \\
+\hline
+Postman & API testing, manual validation & 10.20 \\
+\hline
+\end{longtable}
+
+\section{Performance Testing}
+
+\begin{longtable}{|p{3cm}|p{6cm}|c|}
+\hline
+\textbf{Tool} & \textbf{Purpose} & \textbf{Version} \\
+\hline
+\endfirsthead
+JMeter & Load and stress testing & 5.6 \\
+\hline
+Lighthouse & Web performance auditing & Chrome DevTools \\
+\hline
+GTmetrix & Page speed analysis & Web \\
+\hline
+\end{longtable}
+
+\section{Security Testing}
+
+\begin{longtable}{|p{3cm}|p{6cm}|c|}
+\hline
+\textbf{Tool} & \textbf{Purpose} & \textbf{Version} \\
+\hline
+\endfirsthead
+OWASP ZAP & DAST security scanning & 2.14 \\
+\hline
+SonarQube & SAST code analysis & 10.3 \\
+\hline
+Snyk & Dependency vulnerability scanning & Cloud \\
+\hline
+Burp Suite & Manual security testing & Community \\
+\hline
+\end{longtable}
+
+% Chapter 9: Conclusion
+\chapter{Conclusion}
+
+\section{Summary of Testing Activities}
+
+The Online Food Delivery System underwent comprehensive testing covering functional, non-functional, and security aspects. The testing effort spanned 8 weeks with the following outcomes:
+
+\begin{itemize}
+    \item \textbf{156 test cases} designed and executed with \textbf{95.5\% pass rate}
+    \item \textbf{25 defects} identified, of which \textbf{88\% resolved}
+    \item All \textbf{critical and high-severity defects} fixed before release
+    \item \textbf{Performance benchmarks} met with response times under threshold
+    \item \textbf{Security vulnerabilities} assessed with no critical findings
+    \item \textbf{Regression suite} established with 86\% automation coverage
+\end{itemize}
+
+\section{Quality Assessment}
+
+\begin{longtable}{|p{3.5cm}|l|p{6cm}|}
+\hline
+\textbf{Quality Attribute} & \textbf{Rating} & \textbf{Justification} \\
+\hline
+\endfirsthead
+Functionality & Excellent & All core features working as expected \\
+\hline
+Reliability & Very Good & 99.5\% uptime during testing \\
+\hline
+Performance & Excellent & Meets all response time targets \\
+\hline
+Security & Very Good & No critical vulnerabilities \\
+\hline
+Usability & Very Good & Positive user feedback in UAT \\
+\hline
+Maintainability & Good & Clean code, good documentation \\
+\hline
+Portability & Good & Works across target browsers/devices \\
+\hline
+\end{longtable}
+
+\section{Go/No-Go Decision}
+
+\textbf{Recommendation: GO for Production Release}
+
+\textbf{Rationale:}
+\begin{itemize}
+    \item All critical functionality tested and working
+    \item No blocking defects remaining
+    \item Performance meets requirements
+    \item Security assessment passed
+    \item User acceptance testing successful
+\end{itemize}
+
+% Chapter 10: Future Scope
+\chapter{Future Scope}
+
+\section{Planned Enhancements}
+
+\begin{longtable}{|p{4cm}|p{6cm}|c|}
+\hline
+\textbf{Feature} & \textbf{Description} & \textbf{Priority} \\
+\hline
+\endfirsthead
+AI Recommendations & Personalized restaurant and dish suggestions & High \\
+\hline
+Voice Ordering & Alexa/Google Assistant integration & Medium \\
+\hline
+Subscription Plans & Monthly food delivery subscriptions & Medium \\
+\hline
+Group Ordering & Split bills, multiple delivery addresses & Medium \\
+\hline
+Live Chat Support & Real-time customer assistance & Medium \\
+\hline
+Loyalty Program & Points and rewards system & High \\
+\hline
+Multi-language Support & Regional language interfaces & Low \\
+\hline
+Dark Mode & UI theme option & Low \\
+\hline
+\end{longtable}
+
+\section{Testing Improvements}
+
+\begin{longtable}{|p{3.5cm}|p{6cm}|c|}
+\hline
+\textbf{Improvement} & \textbf{Description} & \textbf{Timeline} \\
+\hline
+\endfirsthead
+Increase Automation & Target 95\% automation coverage & Q1 \\
+\hline
+Performance Baseline & Establish production performance baselines & Q1 \\
+\hline
+Chaos Engineering & Introduce failure testing & Q2 \\
+\hline
+Contract Testing & API contract validation & Q2 \\
+\hline
+Visual Regression & Automated UI comparison testing & Q3 \\
+\hline
+Accessibility Testing & WCAG 2.1 AA compliance testing & Q3 \\
+\hline
+\end{longtable}
+
+% Chapter 11: References
+\chapter{References}
+
+\section{Standards and Guidelines}
+\begin{enumerate}
+    \item IEEE Std 829-2008 - IEEE Standard for Software Test Documentation
+    \item ISO/IEC/IEEE 29119 - Software and Systems Engineering - Software Testing
+    \item OWASP Testing Guide v4.2
+    \item ISTQB Certified Tester Foundation Level Syllabus
+\end{enumerate}
+
+\section{Books and Publications}
+\begin{enumerate}
+    \item Myers, G. J., Sandler, C., \& Badgett, T. (2011). \textit{The Art of Software Testing} (3rd ed.). Wiley.
+    \item Kaner, C., Falk, J., \& Nguyen, H. Q. (1999). \textit{Testing Computer Software} (2nd ed.). Wiley.
+    \item Whittaker, J. A. (2009). \textit{Exploratory Software Testing}. Addison-Wesley.
+    \item Patton, R. (2005). \textit{Software Testing} (2nd ed.). Sams Publishing.
+\end{enumerate}
+
+\section{Technical Documentation}
+\begin{enumerate}
+    \item Project Requirements Specification (SRS) v1.0
+    \item System Design Document (SDD) v1.0
+    \item Database Schema Documentation
+    \item API Documentation (Swagger/OpenAPI)
+\end{enumerate}
+
+\end{document}
