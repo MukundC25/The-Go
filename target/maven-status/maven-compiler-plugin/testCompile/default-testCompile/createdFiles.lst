@@ -1,0 +1,12 @@
+com/fooddelivery/selenium/BaseSeleniumTest.class
+com/fooddelivery/selenium/OrderFlowTest.class
+com/fooddelivery/selenium/AdminDashboardTest.class
+com/fooddelivery/junit/UserServiceTest.class
+com/fooddelivery/junit/RestaurantServiceTest.class
+com/fooddelivery/selenium/LoginTest.class
+com/fooddelivery/selenium/PaymentSimulationTest.class
+com/fooddelivery/junit/OrderServiceTest.class
+com/fooddelivery/junit/PaymentServiceTest.class
+com/fooddelivery/selenium/PasswordResetTest.class
+com/fooddelivery/selenium/RegistrationTest.class
+com/fooddelivery/junit/CartServiceTest.class

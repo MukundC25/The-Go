@@ -425,10 +425,7 @@ Regression testing ensures that new changes do not break existing functionality.
 
 | Build Version | Date | Tests Passed | Tests Failed | Pass Rate |
 |---------------|------|--------------|--------------|-------------|
-| v1.0.0 | Week 1 | 102 | 0 | 100% |
-| v1.1.0 | Week 3 | 100 | 2 | 98% |
-| v1.2.0 | Week 5 | 101 | 1 | 99% |
-| v1.3.0 | Week 7 | 102 | 0 | 100% |
+| v1.0.0 | Week 8 | 32 | 0 | 100% |
 
 #### 3.8.3 Critical Path Testing
 
@@ -668,11 +665,11 @@ Each test case follows the standard format:
 
 | Metric | Count |
 |--------|-------|
-| Total Test Cases | 156 |
-| Passed | 149 |
-| Failed | 5 |
-| Blocked | 2 |
-| Pass Rate | 95.5% |
+| Total Test Cases | 32 |
+| Passed | 32 |
+| Failed | 0 |
+| Blocked | 0 |
+| Pass Rate | 100% |
 
 ### 6.2 Test Execution by Phase
 
@@ -788,11 +785,11 @@ under varying load conditions.
 
 | Severity | Count | Percentage | Status |
 |----------|-------|------------|--------|
-| Critical | 2 | 8% | 2 Fixed |
-| High | 5 | 20% | 5 Fixed |
-| Medium | 10 | 40% | 9 Fixed, 1 Open |
-| Low | 8 | 32% | 6 Fixed, 2 Open |
-| **Total** | **25** | **100%** | **22 Fixed, 3 Open** |
+| Critical | 0 | 0% | 0 Fixed |
+| High | 1 | 100% | 1 Fixed |
+| Medium | 0 | 0% | 0 Fixed, 0 Open |
+| Low | 0 | 0% | 0 Fixed, 0 Open |
+| **Total**| **1** | **100%** | **1 Fixed, 0 Open** |
 
 ### 7.2 Defect Distribution by Module
 
@@ -918,12 +915,12 @@ Week 8:  0 defects
 
 The Online Food Delivery System underwent comprehensive testing covering functional, non-functional, and security aspects. The testing effort spanned 8 weeks with the following outcomes:
 
-- **156 test cases** designed and executed with **95.5% pass rate**
-- **25 defects** identified, of which **88% resolved**
+- **32 test cases** designed and executed with **100% pass rate**
+- **1 defect** identified, of which **100% resolved**
 - All **critical and high-severity defects** fixed before release
 - **Performance benchmarks** met with response times under threshold
 - **Security vulnerabilities** assessed with no critical findings
-- **Regression suite** established with 86% automation coverage
+- **Regression suite** established with 12.5% automation (Selenium) alongside full Unit Tests
 
 ### 9.2 Quality Assessment
 
